@@ -1,0 +1,23 @@
+{
+  "name": "starter-template-restaurant",
+  "version": "1.0.0",
+  "description": "A bootstrap 4 and gulp 4 - HTML 5 restaurant starter template",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeanNab175/starter-template-restaurant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DeanNab175/starter-template-restaurant/issues"
+  },
+  "homepage": "https://github.com/DeanNab175/starter-template-restaurant#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}

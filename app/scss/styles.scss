@@ -1,0 +1,16 @@
+.owl-carousel,
+.carousel {
+  .carousel-inner {
+    height: 600px;
+    overflow: hidden;
+  }
+
+  .carousel-item .detail-block {
+    position: absolute;
+    padding: 2rem;
+    top: 10%;
+    right: 15%;
+    background-color: #fff;
+    width: 35rem;
+  }
+}
