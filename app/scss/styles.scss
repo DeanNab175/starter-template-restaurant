@@ -1,4 +1,7 @@
-.owl-carousel,
+@import 'variables';
+@import 'fonts';
+
+
 .carousel {
   .carousel-inner {
     height: 600px;
@@ -12,5 +15,23 @@
     right: 15%;
     background-color: #fff;
     width: 35rem;
+    max-width: 80%;
+  }
+}
+
+.owl-carousel {
+  .owl-stage-outer {
+    height: 600px;
+  }
+  .slide {
+    .detail-block {
+      position: absolute;
+      padding: 2rem;
+      top: 10%;
+      right: 15%;
+      background-color: #fff;
+      width: 35rem;
+      max-width: 80%;
+    }
   }
 }
