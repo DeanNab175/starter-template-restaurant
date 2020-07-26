@@ -33,11 +33,10 @@ const path = {
       src: [
         'node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss',
         'node_modules/bootstrap/scss/bootstrap.scss',
-        'node_modules/owl.carousel/src/scss/owl.carousel.scss',
-        'node_modules/owl.carousel/src/scss/owl.theme.default.scss',
         'app/scss/**/*.scss'
       ],
-      dist: 'dist/css'
+      dist: 'dist/css',
+      cssFolder: 'app/css/'
     },
     js: {
       src: 'app/js/**/*.js',
@@ -45,7 +44,7 @@ const path = {
       jsFiles: [
         'script.js'
       ],
-      jsFolder: './app/js/'
+      jsFolder: 'app/js/'
     },
     mapURL: './'
 }
@@ -68,6 +67,15 @@ function styleTask(done) {
 }
 
 /**
+ * Move css vendor plugins to dist/vendor
+ */
+function cssVendorTask(done) {
+  src(path.css.cssFolder + 'vendor/**/*.css')
+    .pipe( dest( path.css.dist + '/vendor' ) );
+  done();  
+}
+
+/**
  * JS task
  */
 function jsTask(done) {
@@ -78,16 +86,25 @@ function jsTask(done) {
         .transform( babelify, {presets: ["@babel/preset-env"]} )
         .bundle()
         .pipe( source( entry ) )
-        .pipe(src(path.js.jsFolder + '/vendor/**/*.js'))
         .pipe( rename({ extname: '.min.js' }) )
         .pipe( buffer() )
         .pipe( sourcemaps.init({ loadMaps: true }) )
         .pipe( uglify() )
-        //.pipe(dest(path.js.dist + '/vendor/'))
         .pipe( sourcemaps.write( path.mapURL ) )
         .pipe( dest( path.js.dist ) )
     });
     done();
+}
+
+/**
+ * Move jss vendor plugins to dist/vendor
+ */
+function jsVendorTask(done) {
+    src(path.js.jsFolder + 'vendor/**/*.js')
+      .pipe( rename({ extname: '.min.js' }) )
+      .pipe( uglify() )
+      .pipe( dest( path.js.dist + '/vendor' ) );
+    done();  
 }
 
 
@@ -99,11 +116,14 @@ function watchTask() {
   watch( path.js.src, {usePolling : true}, series( jsTask ) );
 }
 
-exports.styleTask = styleTask;
-exports.jsTask = jsTask;
+// exports.styleTask = styleTask;
+// exports.jsTask = jsTask;
+// exports.jsVendorTask = jsVendorTask;
+// exports.cssVendorTask = cssVendorTask;
 exports.watch = watch;
 
 exports.default = series(
-  parallel(styleTask, jsTask),
+  parallel(styleTask, cssVendorTask),
+  parallel(jsTask, jsVendorTask),
   watchTask
 );
