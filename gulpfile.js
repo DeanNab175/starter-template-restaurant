@@ -195,12 +195,12 @@ function imageminTask(done) {
 };
 
 // Cachebust
-function cacheBustTask() {
+/*function cacheBustTask() {
   var cbString = new Date().getTime();
   return src(['index.html'])
       .pipe(replace(/cb=\d+/g, 'cb=' + cbString))
       .pipe(dest('.'));
-}
+}*/
 
 /**
  * Clean dist folder
@@ -223,8 +223,8 @@ async function clearCache() {
  * Watch task
  */
 function watchTask() {
-  watch( path.css.src, {usePolling : true}, series( styleTask, cacheBustTask, reload ) );
-  watch( path.js.src, {usePolling : true}, series( jsTask, cacheBustTask, reload ) );
+  watch( path.css.src, {usePolling : true}, series( styleTask, reload ) );
+  watch( path.js.src, {usePolling : true}, series( jsTask, reload ) );
   watch(
     [path.fonts.src, path.images.src, path.html],
     {usePolling : true},
@@ -262,5 +262,5 @@ exports.default = series(
   imageminTask,
   parallel(styleTask, cssVendorTask),
   parallel(jsTask, jsVendorTask),
-  parallel(browserSyncTask, cacheBustTask, watchTask)
+  parallel(browserSyncTask, watchTask)
 );
